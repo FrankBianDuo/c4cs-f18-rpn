@@ -1,3 +1,13 @@
+
+op = {
+	'+': operator.add,
+	'-': operator.sub,
+	'*': operator.mul,
+	'/': operator.truediv,
+}
+
+
+
 def calculate(arg):
 
 	# stack for calculator
@@ -7,18 +17,19 @@ def calculate(arg):
 	tokens = arg.split()
 
 	# provess tokens 
-	for token in tokens:
+	while len(stack) > 1:
 		try: 
 			value = int(token)
 			stack.append(value)
 		except ValueError:
-			val1 = stack.pop()
-			val2 = stack.pop()
-			if token == '+':
-				result = val1 + val2
-			elif token == '-':
-				result = val1 - val2
+			val2 = int(stack.pop())
+			val1 = int(stack.pop())
+			#look up function in table
+			func = op[token]
+			result = func(val1, val2)
+
 			stack.append(result)
+
 			return stack[0]
 
 
